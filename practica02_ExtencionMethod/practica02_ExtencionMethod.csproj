@@ -43,11 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\CustomException.cs" />
+    <Compile Include="Extensions\DivisionExtensions.cs" />
+    <Compile Include="Front\Menu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Punto1\ExcepcionSimple.cs" />
+    <Compile Include="Punto2\ExcepcionMultiple.cs" />
+    <Compile Include="Front\Validar.cs" />
+    <Compile Include="Front\Vista.cs" />
+    <Compile Include="Punto3\Logic.cs" />
+    <Compile Include="Punto4\ExcepcionPersonalizada.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
