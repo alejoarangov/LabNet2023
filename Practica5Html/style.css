@@ -1,0 +1,195 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html{
+    font-family: 'Montserrat', sans-serif;
+    font-size: var(--tamañofuente1);
+ }
+
+body{
+    background-image: url(./images/fondo2.jpg);
+}
+.header h1{
+    margin-top: 10px;
+    color:orange;
+}
+
+footer{
+    font-size: smaller;
+    color:darkslategrey;
+}
+
+.containerGeneral  {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 5px 0 60px 0;
+}
+
+.containerSingle{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 5px;
+    width: 300px;
+    border-radius: 6px;
+    margin: 2px 0 
+}
+.bgdWhiteAlfa{
+    background-color: rgba(254, 254, 254, 0.05);
+}
+
+.containerCenter{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.containerStrech{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.containerLeft{
+    display:flex;
+    justify-content: flex-start;
+    width: 50%;
+ }
+ .containerRight{
+    display:flex;
+    justify-content: flex-end;
+    width: 50%;
+ }
+
+.heart{
+    width: 40px;
+    height: 40px;
+    background-image: url(./images/heart2.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.heartResult{
+    background-image: url(./images/heartResult.png);
+} 
+
+button {
+    background-color: rgb(192, 255, 19);
+    border-radius: 6px;
+    padding: 6px;
+    border: none;
+}
+button:hover{
+    background-color: rgb(149, 197, 17);
+}
+button:active{
+    background-color: rgb(109, 145, 9);
+    color:azure;
+}
+
+.buttonStart{
+    width: 100px;
+    font-size: x-large;
+    margin-top: 20px;
+}
+.buttonNum{
+    width: 30px;
+    font-size: large;
+    margin: 0px 5px;
+}
+
+.textTitle input{
+    font-size: larger;
+    color:orange;
+    width: 100%;
+    text-align: center;
+    background-color: transparent;
+    border:none;
+}
+
+.inputNum{
+    border-radius: 6px;
+    border: none;
+    padding: 5px;
+    font-size: xx-large;
+    width: 70px;
+    color:chartreuse;
+    text-align: center;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.inputMessage{
+width: 300px;
+font-size: large;
+text-align: center;
+background-color: red;
+color:white;
+border: none;
+border-radius: 6px;
+padding: 5px 0;
+margin: 10px 0;
+
+}
+
+.numRamdon{
+    background-color: rgb(192, 255, 19);
+    background-image: url(./images/pregunta3.png);
+    background-repeat: no-repeat;
+    background-size: 60px 60px;
+    background-position: 50%;
+    border-radius: 6px;
+    width: 100px;
+    
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+.numRamdon input{
+    width: 80px;
+    font-size: 3rem;
+    color:rgb(25, 25, 25);
+    background-color: rgb(192, 255, 19);
+    border: none;
+    text-align: center;
+}
+
+.numResult input{
+    background-color: rgba(254, 254, 254, 0.05);
+    color: rgb(192, 255, 19);
+    font-size: large;
+    width: 30px;
+    border: none;
+    border-radius: 6px;
+    text-align: center;
+    justify-content: center;
+    padding: 2px;
+    
+}
+
+table, th, td {
+    border: 1px solid rgb(89, 89, 89);
+    border-collapse: collapse; 
+    font-size: small;
+    text-align: center;
+    margin-top: 20px;
+}
+
+th {
+    color: orange;
+}
+td {
+    color: white;
+    padding: 3px 5px;
+}

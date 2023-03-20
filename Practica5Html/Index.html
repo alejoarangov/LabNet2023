@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script src="services.js"> </script>
+    <script src="logic.js"> </script>
+    <title>Document</title>
+</head>
+<header>
+    <div class="header containerSingle containerCenter">
+        <h1>Adivina.. Adivinador..</h1>
+    </div>
+</header>
+<body>
+    <div class="containerGeneral">
+        <div class="containerSingle">
+            <div class="containerLeft">
+                <div class="containerSingle">
+                    <div class = "heart" id="life3">
+                    </div>
+                    <div class = "heart" id="life2">
+                    </div>
+                    <div class = "heart" id="life1">
+                    </div>
+                </div>
+            </div>
+        
+            <div class="containerRight">
+                <div class="containerSingle containerCenter">
+                    <div class="heart heartResult" >
+                    </div>
+                    <div class="numResult">
+                        <input type="number" readonly id="numResult"></input>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class=" containerSingle containerCenter" id="message">
+                <input type="text" class="inputMessage" id="inputMessage" readonly value="Ganaste"></input>
+            </div>
+        </div>
+
+        <div>
+            <div class="containerSingle textTitle">
+                <input type="text"  id="textTitle"></input>
+            </div>
+        </div>
+
+        <div class="containerSingle">
+            <div class="numRamdon containerLeft">
+                <input type="number" id="numRamdon" readonly ></input>
+            </div>
+            <div class="containerRight">
+                <div class = "containerSingle containerCenter">
+                    <input type="number" id="inputNum"  readonly class="inputNum bgdWhiteAlfa" ></input>
+                </div>
+                <div class="containerSingle containerCenter">
+                    <button class="buttonNum"  id="buttonMax" onclick="NumMax()">+</button>
+                    <button class="buttonNum" id="buttonMin" onclick="NumMin()">-</button>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <button class="buttonStart" id="buttonStart" onclick="Start()">Iniciar</button>
+            </div>
+            <div>
+                <button class="buttonStart" id="buttonPlay" onclick="Play()">Probar</button>
+            </div>
+        </div>
+
+        <div>
+            <div id="tableBegin">
+                <table id="table">
+                    <tr>
+                      <th>Ronda</th>
+                      <th>Puntos</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<footer>
+    <div >
+        <div class=" containerSingle containerCenter">
+            <span>Alejoarangov - LAB-Feb-2023</span>
+        </div>
+        <div class=" containerSingle containerCenter">
+            <label for="che">Descubrir el número..</label>
+            <input type="checkbox" id="check" onchange="ValidateCheck()"></input>
+        </div>
+    </div>
+</footer>
+</html>
