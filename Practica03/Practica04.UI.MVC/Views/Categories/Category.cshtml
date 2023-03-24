@@ -1,0 +1,34 @@
+﻿@model Practica06.UI.MVC.Models.CategoriesDto
+@{
+    ViewBag.Title = "Categoría";
+}
+
+<div class="p-1 m-0 mb-3  text-info text-center">
+    <h4>Categoría</h4>
+</div>
+
+<div class="container">
+    @using (Html.BeginForm("Save", "Categories", FormMethod.Post))
+    {
+        <div class="mb-3">
+            @Html.HiddenFor(x => x.CategoryID)
+            @Html.LabelFor(r => r.CategoryName, new { @Class = "form-label" })
+            @Html.TextBoxFor(r => r.CategoryName, new { @Class = "form-control" })
+            @Html.ValidationMessageFor(r => r.CategoryName, "", new { @Class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(r => r.Description, new { @Class = "form-label" })
+            @Html.TextBoxFor(r => r.Description, new { @Class = "form-control" })
+            @Html.ValidationMessageFor(r => r.Description, "", new { @Class = "text-danger" })
+        </div>
+        <input type="submit" class="btn btn-info" value="Guardar" />
+        <a class="btn btn-secondary" href="~/Categories">Atrás</a>
+    }
+</div>
+
+@if (Model.Error != "" && Model.Error != null)
+{
+    <script type="text/javascript">
+        alert('@Model.Error')
+    </script>
+}

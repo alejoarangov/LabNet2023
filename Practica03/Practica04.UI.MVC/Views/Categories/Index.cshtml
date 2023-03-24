@@ -1,0 +1,52 @@
+﻿@model Practica06.UI.MVC.Models.CategoriesDto
+
+@{
+    ViewData["Title"] = "Categorías";
+
+}
+
+<div class="p-1 m-0 mb-3  text-info text-center">
+    <h4>Listado de Categorías</h4>
+</div>
+
+
+<div class="row">
+    <table class="table table-hover">
+
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Eliminar</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var category in Model.ListCategories)
+            {
+                <tr>
+                    <td>@category.CategoryID</td>
+                    <td>@category.CategoryName</td>
+                    <td>@category.Description</td>
+
+                    <td>
+                        @Html.ActionLink("Editar", "Category", "Categories", new { id = category.CategoryID }, new { @class = "btn btn-light text-info" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Eliminar", "Delete", "Categories", new { id = category.CategoryID }, new { @class = "btn btn-light text-danger" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@if (Model.Error != "" && Model.Error != null)
+{
+    <script type="text/javascript">
+        alert('@Model.Error')   
+    </script>
+}

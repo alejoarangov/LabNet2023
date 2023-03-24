@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace Practica03.Utils.Extensions
 {
@@ -12,7 +7,7 @@ namespace Practica03.Utils.Extensions
         public static bool IsText(this string text)
         {
             bool result;
-            result = (Regex.IsMatch(text, @"^[a-zA-Z/\s]*$"))? true:false;  
+            result = (Regex.IsMatch(text, @"^[a-zA-Z/\s]+$"))? true:false;  
             return result;
         }
 

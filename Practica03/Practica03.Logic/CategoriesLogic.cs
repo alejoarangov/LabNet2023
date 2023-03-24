@@ -1,178 +1,191 @@
-﻿
-using Practica03.Logic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Practica03.Utils.Extensions;
 using Practica03.Entities;
 using Practica03.Data.Context;
-using System.Xml.Linq;
 
 namespace Practica03.Logic
 {
-    
-    public class CategoriesLogic : ICrudLogic<Categories>
-    {
-        #region Variable
-        private readonly NorthwindContext context;
-        #endregion
 
-        #region Builder
+    public class CategoriesLogic:ICategoriesLogic
+    {
+        
+        private readonly NorthwindContext context;
         public CategoriesLogic()
         {
             context = new NorthwindContext();
         }
-        #endregion
+
 
         #region GetAll
-        public (List<Categories> lst, string result) GetAll()
+        public Response GetAll()
         {
-            List<Categories> lst = null;
-            string result;
+            Response response = new Response();
             try
             {
-                lst = context.Categories.ToList();
-                result = "Ok";
+                response.ListCategory = context.Categories.ToList();
+                response.Success = true;
             }
             catch (Exception ex)
             {
-                result = $"Atencion!! se produjo un error: {ex}";
+                response.Message = $"Atencion!! se produjo un error: {ex.Message}";
+                response.Success = false;
             }
-            return (lst, result);
+            return response;
         }
         #endregion
 
         #region Create 
-        public string Create(string name)
+        public Response Create(Categories category)
         {
-            string result;
-            if (name.IsText())
+            Response response = new Response();
+            response = GetByName(category.CategoryName);
+
+            if (!response.Success)
             {
-                if (!ValidateName(name))
+                Categories categories = new Categories()
                 {
-                    try
-                    {
-                        Categories categories = new Categories();
-                        categories.CategoryName = name;
-                        context.Categories.Add(categories);
-                        context.SaveChanges();
-                        result = "Ok";
-                    }
-                    catch (Exception ex)
-                    {
-                        result = $"Atencion!! se produjo un error: {ex}";
-                    }
-                }
-                else
+                    CategoryName = category.CategoryName,
+                    Description = category.Description
+                };
+
+                try
                 {
-                    result = $"La categoría '{name}' ya existe en la BD";
+                    context.Categories.Add(categories);
+                    context.SaveChanges();
+                    response.Success = true;
                 }
-            }else
-            {
-                result = "El campo 'Name' debe digenciarse sólo con texto";
+                catch (Exception ex)
+                {
+                    response.Message = $"Atencion!! se produjo un error: {ex.Message}";
+                    response.Success = false;
+                }
             }
-            return result;
+            else
+            {
+                response.Message = $"La categoria {category.CategoryName} ya existe en la BD";
+                response.Success = false;
+            }
+            return response;
+            
         }
         #endregion
 
         #region Update
-        public string Update(string nameOld, string nameNew)
+        public Response Update(Categories category)
         {
-            string result;
-            if (nameOld.IsText() && nameNew.IsText())
-            {
-                if (ValidateName(nameOld))
-                {
-                    try
-                    {
-                        Categories categories = new Categories();
-                        categories = GetByName(nameOld).entity;
-                        categories.CategoryName= nameNew;
-                        context.SaveChanges();
-                        result = "Ok";
-                    }
-                    catch (Exception ex)
-                    {
-                        result = $"Atencion!! se produjo un error: {ex}";
-                    }
-                }
-                else
-                {
-                    result = $"La categoría '{nameOld}' NO existe en la BD";
-                }
-            }
-            else
-            {
-                result = "Los campos deben digenciarse sólo con texto";
-            }
-            return result;
-        }
-        #endregion
+            Response response = new Response();
+            response = GetByID(category.CategoryID);
 
-        #region GetByName
-        public (Categories entity, string result) GetByName(string name)
-        {
-            string result;
-            Categories category=null;
-            if (ValidateName(name))
+            if (response.Success == true)
             {
-                try
+                Response respon = new Response();
+                respon = GetByName(category.CategoryName);
+                if(respon.Success == true)
                 {
-                    category = context.Categories.First(x => x.CategoryName == name);
-                    result = "Ok";
+                    respon.Message = $"La categoria {category.CategoryName} ya existe en la BD";
+                    respon.Success = false;
+                    return respon;
+                }
+
+                response.Category.CategoryName = category.CategoryName;
+                response.Category.Description = category.Description;
+                try
+                {    
+                    context.SaveChanges();
+                    response.Success = true;
                 }
                 catch (Exception ex)
                 {
-                    result = $"Atencion!! se produjo un error: {ex}";
+                    response.Message = $"Atencion!! se produjo un error: {ex.Message}";
+                    response.Success = false;
                 }
             }
-            else
-            {
-                result = $"La categoría '{name}' No existe en la BD";
-            }
-            return (category, result);
+            return response;
         }
         #endregion
 
         #region Delete
-        public (Categories entity, string result) Delete(string name)
+        public Response Delete(int id)
         {
-            string result;
-            Categories category = null;
-            if (ValidateName(name))
+            Response response = new Response();
+            response = GetByID(id);
+             
+            if (response.Success)
             {
+                if(ValidateProducts(response.Category))
+                {
+                    response.Message = $"La categoria {response.Category.CategoryName} No puede ser borrada porque tiene productos asignados";
+                    response.Success= false;
+                    return response;
+                }
                 try
                 {
-                    category=GetByName(name).entity;
-                    context.Categories.Remove(category);
+                    context.Categories.Remove(response.Category);
                     context.SaveChanges();
-                    result = "Ok";
+                    response.Success= true;
                 }
                 catch (Exception ex)
                 {
-                    result = $"Atencion!! se produjo un error: {ex}";
+                    response.Message = $"Atencion!! se produjo un error: {ex.Message}";
                 }
             }
             else
             {
-                result = $"La categoría '{name}' No existe en la BD";
+                response.Message = $"La categoría con id {id} No existe en la BD";
             }
-            return (category, result);
+            return response;
         }
         #endregion
 
-        #region ValidateName
-        public bool ValidateName(string name)
+        #region GetByName
+        public Response GetByName(string name)
         {
-            bool result = false;
+            Response response = new Response();
+            {
+                try
+                {
+                    response.Category = context.Categories.First(x => x.CategoryName == name);
+                    response.Success = true;
+                }
+                catch 
+                {
+                    response.Success = false;
+                }
+            }
+           return response;
+        }
+        #endregion
+
+        #region GetByID
+        public Response GetByID(int? id)
+        {
+            Response response = new Response();
+                try
+                {
+                    response.Category = context.Categories.First(x => x.CategoryID == id);
+                    response.Success = true;
+                }
+                catch (Exception ex)
+                {
+                    response.Success = false;
+                    response.Message = $"Atencion!! No se encontro el ID: {id} -  {ex.Message}";
+                }
+            return response;
+        }
+        #endregion
+
+        #region ValidateProducts
+        public bool ValidateProducts(Categories category)
+        {
+            List<Products> products = new List<Products>();
+            bool result;
             try
             {
-                Categories categories = context.Categories.First(x => x.CategoryName == name);
-                result = (categories.CategoryName == name) ? true : false;
+                products = context.Products.Where(x => x.CategoryID == category.CategoryID).ToList();
+                result=(products.Count()==0)?false:true;
             }
-            catch
+            catch 
             {
                 result = false;
             }
