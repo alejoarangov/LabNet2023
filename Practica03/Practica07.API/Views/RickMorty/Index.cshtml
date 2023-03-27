@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Rick And Morty";
+}
+
+<div class="container">
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <label for="personajes" class="font-weight-bold">Seleccione un Personaje</label>
+                <input class="form-control" list="opciones" id="lista" name="lista" onchange="cambiarPersonaje()">
+                <datalist id="opciones"></datalist>
+            </div>
+        </div>
+    </div>
+
+    <div class="container w-75 mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group ">
+                    <label for="nombre" class="font-weight-bold">Nombre</label>
+                    <input type="text" class="form-control form-control-lg" id="nombre" value="Rick Sanchez" readonly>
+                </div>
+
+                <div class="form-group mt-4">
+                    <label for="especie">Especie</label>
+                    <input type="text" class="form-control" id="especie" value="Human" readonly>
+                </div>
+
+                <div class="form-group mt-4">
+                    <label for="estado">Estado</label>
+                    <input type="text" class="form-control" id="estado" value="Alive" readonly>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <img src="https://rickandmortyapi.com/api/character/avatar/1.jpeg" id="foto" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    cargarDataList();
+    let nombre = document.getElementById("nombre");
+    let estado = document.getElementById("estado");
+    let foto = document.getElementById("foto");
+    let especie = document.getElementById("especie");
+
+    function cargarDataList() {
+        getPersonaje(data => {
+            const datalist = document.getElementById('opciones');
+
+            data.results.forEach((personaje) => {
+                const opcion = document.createElement('option');
+                opcion.value = personaje.name;
+                datalist.appendChild(opcion);
+            });
+        });
+    }
+
+    function getPersonaje(callback) {
+        const result = fetch("https://rickandmortyapi.com/api/character");
+        result
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            });
+    }
+
+    function cambiarPersonaje() {
+        const input = document.getElementById('lista');
+        const nombreSelec = input.value;
+
+        getPersonaje(data => {
+            var person = data.results.find(personaje => personaje.name == nombreSelec)
+            nombre.value = person.name;
+            estado.value = person.status;
+            especie.value = person.species;
+            foto.src = person.image;
+        });
+    }
+</script>
+
+
+
+
+
+
+
+
+

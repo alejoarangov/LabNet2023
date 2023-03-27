@@ -14,7 +14,7 @@ namespace Practica03.Utils.Extensions
         public static bool IsDigit(this string text)
         {
             bool result;
-            result = (Regex.IsMatch(text, "^[0-9]{1}$")) ? true : false;
+            result = (Regex.IsMatch(text, "^[0-9]+$")) ? true : false;
             return result;
         }
 
