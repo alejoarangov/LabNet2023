@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using Practica03.Utils.Extensions;
+using System.Web.Http.Cors;
 
 namespace Practica07.API.Controllers
 {
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class CategoriesController : ApiController
     {
         private readonly CategoriesLogic categoriesLogic;

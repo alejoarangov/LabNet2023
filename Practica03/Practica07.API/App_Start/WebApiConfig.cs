@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Practica07.API
 {
@@ -10,6 +8,8 @@ namespace Practica07.API
         public static void Register(HttpConfiguration config)
         {
             // Configuración y servicios de Web API
+            var cors = new EnableCorsAttribute("http://localhost:4200/", "*", "*");
+            config.EnableCors(cors);
 
             // Rutas de Web API
             config.MapHttpAttributeRoutes();
